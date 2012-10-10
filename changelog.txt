@@ -1,0 +1,14 @@
+[B]Version 0.0.5[/B]
+  - Minor fixes
+  
+[B]Version 0.0.4[/B]
+  - added nepalicollections.com
+  
+[B]Version 0.0.3[/B]
+  - added songsnepal.com
+
+[B]Version 0.0.2[/B]
+  - added enternepal.net
+
+[B]Version 0.0.1[/B]
+  - initial version
