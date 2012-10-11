@@ -85,7 +85,7 @@ def browse(url=None):
         Mediaitem.ListItem.setThumbnailImage(Mediaitem.Image)
         Mediaitem.Url = sys.argv[0] + '?site="' + site + '"&mode="' + Mediaitem.Mode 
         Mediaitem.Url += '"&url="' + Url + '"&name="' + Title + '"'
-        Mediaitem.ListItem.setProperty('IsPlayable', 'true')
+        #Mediaitem.ListItem.setProperty('IsPlayable', 'true')
         MediaItems.append(Mediaitem)
     
     Common.addDir(MediaItems)
