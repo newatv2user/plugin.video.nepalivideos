@@ -14,8 +14,9 @@ common = CommonFunctions
 common.dbg = False
 common.dbglevel = 3
 
-__settings__ = xbmcaddon.Addon(id='plugin.video.nepalivideos')
-settingsDir = __settings__.getAddonInfo('profile')
+Addon = xbmcaddon.Addon()
+Addonid = Addon.getAddonInfo('id')
+settingsDir = Addon.getAddonInfo('profile')
 settingsDir = xbmc.translatePath(settingsDir)
 cacheDir = os.path.join(settingsDir, 'cache')
 pluginhandle = int(sys.argv[1])
@@ -36,14 +37,14 @@ if not os.path.exists(settingsDir):
 if not os.path.exists(cacheDir):
     os.mkdir(cacheDir)
 
-programs_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'programs.png')
-topics_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'topics.png')
-search_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'search.png')
-next_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'next.png')
-movies_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'movies.jpg')
-tv_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'television.jpg')
-shows_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'shows.png')
-video_thumb = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'media', 'movies.png')
+programs_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'programs.png')
+topics_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'topics.png')
+search_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'search.png')
+next_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'next.png')
+movies_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'movies.jpg')
+tv_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'television.jpg')
+shows_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'shows.png')
+video_thumb = os.path.join(Addon.getAddonInfo('path'), 'resources', 'media', 'movies.png')
 
 class MediaItem:
     ##################
@@ -129,25 +130,25 @@ def SetViewMode():
     # Set View Mode selected in the setting
     try:
         # if (xbmc.getSkinDir() == "skin.confluence"):
-        if __settings__.getSetting('view_mode') == "1": # List
+        if Addon.getSetting('view_mode') == "1": # List
             xbmc.executebuiltin('Container.SetViewMode(502)')
-        if __settings__.getSetting('view_mode') == "2": # Big List
+        if Addon.getSetting('view_mode') == "2": # Big List
             xbmc.executebuiltin('Container.SetViewMode(51)')
-        if __settings__.getSetting('view_mode') == "3": # Thumbnails
+        if Addon.getSetting('view_mode') == "3": # Thumbnails
             xbmc.executebuiltin('Container.SetViewMode(500)')
-        if __settings__.getSetting('view_mode') == "4": # Poster Wrap
+        if Addon.getSetting('view_mode') == "4": # Poster Wrap
             xbmc.executebuiltin('Container.SetViewMode(501)')
-        if __settings__.getSetting('view_mode') == "5": # Fanart
+        if Addon.getSetting('view_mode') == "5": # Fanart
             xbmc.executebuiltin('Container.SetViewMode(508)')
-        if __settings__.getSetting('view_mode') == "6":  # Media info
+        if Addon.getSetting('view_mode') == "6":  # Media info
             xbmc.executebuiltin('Container.SetViewMode(504)')
-        if __settings__.getSetting('view_mode') == "7": # Media info 2
+        if Addon.getSetting('view_mode') == "7": # Media info 2
             xbmc.executebuiltin('Container.SetViewMode(503)')
             
-        if __settings__.getSetting('view_mode') == "0": # Media info for Quartz?
+        if Addon.getSetting('view_mode') == "0": # Media info for Quartz?
             xbmc.executebuiltin('Container.SetViewMode(52)')
     except:
-        print "SetViewMode Failed: " + __settings__.getSetting('view_mode')
+        print "SetViewMode Failed: " + Addon.getSetting('view_mode')
         print "Skin: " + xbmc.getSkinDir()
     
 """
@@ -162,7 +163,8 @@ site_dict = { 'npvideo': ('NPVideo.com', shows_thumb),
               'canadanepal': ('CanadaNepal.info', 'http://canadanepal.info/LOGO.PNG?4d90a879c4c17170cc959d2fff61062b'),
               'enternepal': ('EnterNepal.net', 'http://www.enternepal.net/wp-content/themes/enternepal/images/en_logo.png'),
               'songsnepal': ('SongsNepal.com', 'http://www.songsnepal.com/templates/ozenyx/images/logo.png'),
-              'nepalicollections': ('NepaliCollections.com', 'http://nepalicollections.com/function/images/newmain1_01.png')
+              'nepalicollections': ('NepaliCollections.com', 'http://nepalicollections.com/function/images/newmain1_01.png'),
+              'youtuberss': ('YoutubeRSS', 'http://www.youtube.com/img/pic_youtubelogo_123x63.gif')
             }
     
 '''def BuildMainDirectory():
