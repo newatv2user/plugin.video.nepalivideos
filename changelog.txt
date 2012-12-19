@@ -1,3 +1,6 @@
+[B]Version 0.0.6[/B]
+  - More fixes
+
 [B]Version 0.0.5[/B]
   - Minor fixes
   

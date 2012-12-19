@@ -43,7 +43,7 @@ def Main():
         Mediaitem.Mode = Mode
         Mediaitem.ListItem.setThumbnailImage(Mediaitem.Image)
         Mediaitem.Url = sys.argv[0] + '?site="' + site + '"&mode="' + Mediaitem.Mode 
-        Mediaitem.Url += '"&url="' + Url + '"&name="' + Title + '"'
+        Mediaitem.Url += '"&url="' + urllib.quote_plus(Url) + '"&name="' + Title + '"'
         MediaItems.append(Mediaitem)
     Common.addDir(MediaItems)
 
@@ -53,7 +53,7 @@ def browse(url=None):
     print 'nepalicollections browse'
     # set content type so library shows more views and info
     xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-    splits = url.split(", Post=")
+    splits = url.split("&Post=")
     url = splits[0]
     post = splits[1]
     postdict = {}
@@ -85,7 +85,7 @@ def browse(url=None):
         Mediaitem.ListItem.setThumbnailImage(Mediaitem.Image)
         Mediaitem.Url = sys.argv[0] + '?site="' + site + '"&mode="' + Mediaitem.Mode 
         Mediaitem.Url += '"&url="' + Url + '"&name="' + Title + '"'
-        #Mediaitem.ListItem.setProperty('IsPlayable', 'true')
+        Mediaitem.ListItem.setProperty('IsPlayable', 'true')
         MediaItems.append(Mediaitem)
     
     Common.addDir(MediaItems)
@@ -104,7 +104,7 @@ def searchd():
         return
     
     #search = urllib.quote_plus(search)
-    Url = BASE_URL + POST_URL + ', Post=' + search
+    Url = BASE_URL + POST_URL + '&Post=' + search
     browse(Url)
     
 def searchn():
@@ -118,7 +118,7 @@ def searchn():
         return
     
     search = search.replace(' ', '%20')
-    Url = BASE_URL + POST_URL + ', Post=' + search
+    Url = BASE_URL + POST_URL + '&Post=' + search
     #print Url
     browse(Url)
 
