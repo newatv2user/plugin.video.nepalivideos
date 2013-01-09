@@ -40,6 +40,7 @@ def Main():
         MediaItems.append(Mediaitem)
         
     data = Common.getURL(BASE_URL)
+    data = unicode(data, 'utf-8', 'ignore')
     #print data
     ULCat = common.parseDOM(data, "ul", {"id": "ul_categories"})[0]
     #ULCat = common.parseDOM(data, "div", {"class": "categoriesdropped"})[0]

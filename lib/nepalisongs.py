@@ -15,7 +15,7 @@ import hosts
 
 # For parsedom
 common = CommonFunctions
-common.dbg = False
+common.dbg = True
 common.dbglevel = 3
 
 BASE_URL = 'http://nepalisongs.tv/newvideos.html'
@@ -37,6 +37,7 @@ def browse(url=None):
     data = Common.getURL(url)
     #data = Common.save_web_page(url, 'nepalisongs.html')
     #data = Common.load_local_page('npvideo.html')
+    data = unicode(data, 'utf-8', 'ignore')
     videolist = common.parseDOM(data, "ul", attrs={ "class": "top-videos-list"})[0]
     menuItems = common.parseDOM(videolist, "li")
     MediaItems = []

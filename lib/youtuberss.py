@@ -11,6 +11,7 @@ import urllib
 import sys
 import hosts
 import xbmcplugin, xbmcgui
+import re
 
 # For parsedom
 common = CommonFunctions
@@ -19,7 +20,8 @@ common.dbglevel = 3
 
 cache = StorageServer.StorageServer(Common.Addonid, 1)
 
-Query = 'nepali%20videos%20AND%20(hd%20OR%20720p%20OR%201080p)'
+#Query = 'nepali%20videos%20AND%20(hd%20OR%20720p%20OR%201080p)'
+Query = '(nepali%20OR%20nepal%20OR%20nepalese)%20AND%20(hd%20OR%20720p%20OR%201080p)'
 URL = 'http://gdata.youtube.com/feeds/base/videos?q=%s&start-index=%d&client=ytapi-youtube-search&alt=rss&v=1&orderby=published'
 site = 'youtuberss'
 pluginhandle = int(sys.argv[1])
@@ -38,6 +40,10 @@ def browse():
     channel = common.parseDOM(Data, "channel")
     if not channel:
         return
+
+    # set content type so library shows more views and info
+    xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+    
     channel = channel[0]
     MediaItems = []
     totalResults = common.parseDOM(channel, "openSearch:totalResults")
@@ -70,14 +76,29 @@ def browse():
         if not Href:
             continue
         Href = Href[0]
+
+        Image = re.compile('&lt;img.+?src="(.+?)"&gt;').findall(item)
+        if not Image:
+            Image = ''
+        else:
+            Image = Image[0]
+        
+        Desc = re.compile('&gt;([^&\r\n].+?)&lt;/a&gt;').findall(item)
+        if not Desc:
+            Desc = ''
+        else:
+            Desc = Desc[0]
+        Desc = common.replaceHTMLCodes(Desc)
         Mediaitem.Mode = 'play'
+        Mediaitem.Image = Image
         Hrefz = urllib.quote_plus(Href)
-        Mediaitem.ListItem.setInfo('video', { 'Title': Title})
+        Mediaitem.ListItem.setInfo('video', { 'Title': Title, 'Plot': Desc})
         Mediaitem.ListItem.setLabel(Title)
         
         Mediaitem.Url = sys.argv[0] + '?site="' + site + '"&mode="' + Mediaitem.Mode 
         Mediaitem.Url += '"&url="' + Hrefz + '"&name="' + Title + '"'
         Mediaitem.ListItem.setProperty('IsPlayable', 'true')
+        Mediaitem.ListItem.setThumbnailImage(Mediaitem.Image)
         MediaItems.append(Mediaitem)
 
     Common.addDir(MediaItems)    
